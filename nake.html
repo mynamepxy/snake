@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>nake</title>
+	<link rel="stylesheet" type="text/css" href="../../bootstrap.min.css">
+	<style type="text/css">
+	*{
+		margin:0;
+		padding: 0;
+	}
+		#content{
+			width: 800px;
+			height: 400px;
+			background-image: url(./12.jpg);
+			margin:0 auto;
+			position: relative;
+
+		}
+		/*#footer{
+			width: 200px;
+			
+			margin:0 auto;
+			text-align: center;
+
+
+		}
+		input{
+			width: 200px;
+			
+			margin:0 auto;
+			text-align: center;
+		}*/
+        
+	</style>
+</head>
+<body>
+    <div class="container">
+	<div id="content"></div>
+	<input type="button" name="btnstrat" id="btnstrat" value="strat"  class="btn btn-default">
+	<input type="button" name="btnstop" id="btnstop" value="stop"  class="btn btn-default">
+	<div id="footer">  <s>design</s> copy by 潘兴杨</div>
+	</div>
+	<script type="text/javascript">
+	var c = document.getElementById('content');
+	var btnstrat = document.getElementById('btnstrat');
+	var btnstop = document.getElementById('btnstop');
+	//食物div
+		function setfood(){
+			this.divfood = document.createElement('div');
+			this.divfood.style.position = 'absolute';
+            this.len = 20;
+            //var erwei = new Array();
+             this.showfood= function(){
+            // var loop = 1;
+             this.randL = Math.floor(Math.random()*3+2);
+             this.randT = Math.floor(Math.random()*3+2);
+
+           	 this.divfood.style.left = this.len*this.randL+'px';
+			 this.divfood.style.top = this.len*this.randT+'px';
+			 this.divfood.style.backgroundColor = 'red';
+			 this.divfood.style.width='20px';
+			 this.divfood.style.height='20px';
+             console.log(this.randL); console.log('----'+this.randT);
+              for (var i = 0; i < nake.arr.length; i++) {
+             if(nake.arr[i][0]==this.randL&&nake.arr[i][1]==this.randT){
+                   console.log('++++'+this.randL);console.log('++++'+this.randT);
+                    this.showfood();
+                    
+                  
+           	
+              }
+          }
+			 c.appendChild(this.divfood);
+          
+           }
+
+			 
+		}
+		
+
+		function Nake(){
+	this.arr = [[0,1,'#38CE5C',null],[1,1,'#38CE5C',null],[2,1,'#38CE5C',null],[3,1,'#E76666',null]];
+	this.redirect = "right";
+		this.shownake = function(){
+			//console.log(this.arr[0]+'---'+this.arr[1]+'----'+this.arr[2]);
+			for(var i = 0 ; i<this.arr.length; i++){
+				if( this.arr[i][3]==null){
+             this.arr[i][3] = document.createElement('div');
+				this.arr[i][3].style.position = 'absolute';
+				this.arr[i][3].style.width='20px';
+			    this.arr[i][3].style.height='20px';
+				this.arr[i][3].style.backgroundColor = this.arr[i][2];
+				c.appendChild(this.arr[i][3]);
+         }
+				
+				this.arr[i][3].style.left = this.arr[i][0]*20+'px';
+				this.arr[i][3].style.top = this.arr[i][1]*20+'px';
+				
+				
+
+			
+		}
+			
+	}
+		this.touchselt=function(){
+			for (var i = 0; i < this.arr.length-1; i++) {
+				if(this.arr[i][0]==this.arr[this.arr.length-1][0]&&this.arr[i][1]==this.arr[this.arr.length-1][1]){
+					alert('你输了(´༎ຶД༎ຶ)');
+					clearInterval(game);
+				location.href='file:///C:/phpDome/js/nake/nake.html';
+				}
+			}
+			
+		}
+		this.border = function(){
+			if(this.arr[this.arr.length-1][0]>39||this.arr[this.arr.length-1][0]<0){
+				alert('你輸了');
+				clearInterval(game);
+					
+				location.href='file:///C:/phpDome/js/nake/nake.html';
+				//return false;
+			}
+			if(this.arr[this.arr.length-1][1]>19||this.arr[this.arr.length-1][1]<0){
+				alert('你輸了');
+				clearInterval(game);
+				location.href='file:///C:/phpDome/js/nake/nake.html';
+				//return false;
+			}
+		}
+		//蛇动起来
+		this.nakeaction = function(){
+			// this.temp = new Array();
+			// this.temp[0] = this.arr[0];
+			var newjie = [this.arr[0][0],this.arr[0][1],'green',null];
+			for(var i = 0; i<this.arr.length-1; i++){
+                 this.arr[i][0] = this.arr[i+1][0];
+                // console.log(this.arr[i][0]);
+				 this.arr[i][1] = this.arr[i+1][1];
+				 //console.log(this.arr[i][1]);
+			}
+			if(this.redirect == "right"){
+
+			this.arr[this.arr.length-1][0]++;
+			}
+			if(this.redirect == "left"){
+
+			this.arr[this.arr.length-1][0]--;
+			}
+			if(this.redirect == "top"){
+
+			this.arr[this.arr.length-1][1]--;
+			}
+			if(this.redirect == "down"){
+
+			this.arr[this.arr.length-1][1]++;
+			}
+			
+
+			
+			if(this.arr[this.arr.length-1][0]==food.randL&&this.arr[this.arr.length-1][1]==food.randT){
+			
+				this.arr.unshift(newjie);
+				food.showfood();
+			}
+			this.shownake();
+			//this.touchselt();
+			//this.border();
+			//food.showfood();
+		}
+	}
+
+		window.onload = function(){
+		    food = new setfood();
+			 nake = new Nake();
+			 food.showfood();
+			 nake.shownake();
+
+			 btnstrat.onclick = function(){
+		 game = setInterval('nake.nakeaction()',400);
+	}
+	btnstop.onclick = function(){
+		clearInterval(game);
+	}
+			
+			// setInterval(food.randL,200);
+			 //setInterval(food.randT,200);
+			//nake.shownake();
+			document.onkeyup = function(e){
+				var event = e?e:window.e;
+				if(event.keyCode==37&&nake.redirect!='right'){
+					nake.redirect="left";
+				}
+				if(event.keyCode==39&&nake.redirect!='left'){
+					nake.redirect="right";
+				}
+				if(event.keyCode==38&&nake.redirect!='down'){
+					nake.redirect="top";
+				}
+				if(event.keyCode==40&&nake.redirect!='top'){
+					nake.redirect="down";
+				}
+
+				
+			}
+		}
+		
+	</script>
+</body>
+</html>
